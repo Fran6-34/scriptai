@@ -494,6 +494,15 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
               </button>
             </div>
           )}
+
+        <div style={{maxWidth:"700px",margin:"0 auto",padding:"60px 20px 40px",borderTop:"1px solid rgba(255,255,255,0.06)"}}>
+          <h2 style={{fontFamily:"'Clash Display',sans-serif",fontSize:"1.4rem",fontWeight:"700",color:"#f0eeff",marginBottom:"16px"}}>Générateur de script TikTok, Reels et Shorts gratuit</h2>
+          <p style={{fontSize:".9rem",lineHeight:"1.8",color:"rgba(240,238,255,0.4)",fontWeight:"300",marginBottom:"20px"}}>ScriptAI est un générateur de scripts vidéo gratuit propulsé par IA. Crée en 10 secondes un script viral pour TikTok, Instagram Reels ou YouTube Shorts en français. Hook accrocheur, développement rythmé et call-to-action engageant générés automatiquement.</p>
+          <h3 style={{fontFamily:"'Clash Display',sans-serif",fontSize:"1rem",fontWeight:"600",color:"#f0eeff",marginBottom:"12px"}}>Comment générer un script viral ?</h3>
+          <p style={{fontSize:".9rem",lineHeight:"1.8",color:"rgba(240,238,255,0.4)",fontWeight:"300",marginBottom:"20px"}}>Choisis ta niche, la durée (30, 60 ou 90 secondes), le ton souhaité, entre ton sujet et clique sur générer. L IA rédige instantanément un script structuré prêt à filmer pour TikTok, Reels ou Shorts.</p>
+          <h3 style={{fontFamily:"'Clash Display',sans-serif",fontSize:"1rem",fontWeight:"600",color:"#f0eeff",marginBottom:"12px"}}>Pourquoi utiliser un script IA pour tes vidéos courtes ?</h3>
+          <p style={{fontSize:".9rem",lineHeight:"1.8",color:"rgba(240,238,255,0.4)",fontWeight:"300",marginBottom:"20px"}}>Un script structuré multiplie le taux de rétention sur TikTok et Reels. Le hook capte l attention en 3 secondes, le développement retient le spectateur, le CTA génère abonnés et engagement. Gratuit, sans inscription.</p>
+        </div>
         </div>
       </div>
     </>
