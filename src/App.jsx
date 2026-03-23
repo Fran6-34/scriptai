@@ -477,8 +477,8 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
                   {name:"🎵 YT Audio Library",url:"https://studio.youtube.com"},
                 ].map((t) => (
                   <a key={t.name} href={t.url} target="_blank" rel="noopener noreferrer" className="tool-chip" style={{textDecoration:"none",color:"inherit"}}>
-                    {t}
-                  </span>
+                    {t.name}
+                  </a>
                 ))}
               </div>
 
