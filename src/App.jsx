@@ -470,13 +470,13 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
 
               <div className="tools-row">
                 {[
-                  "🎬 CapCut",
-                  "🎙 ElevenLabs",
+                  {name:"🎬 CapCut",url:"https://www.capcut.com"},
+                  {name:"🎙 ElevenLabs",url:"https://try.elevenlabs.io/c33b8205vs24"},
                   "🎨 Canva",
                   "📹 Pexels",
                   "🎵 YT Audio Library",
                 ].map((t) => (
-                  <span key={t} className="tool-chip">
+                  <a key={t.name} href={t.url} target="_blank" rel="noopener noreferrer" className="tool-chip" style={{textDecoration:"none",color:"inherit"}}>
                     {t}
                   </span>
                 ))}
