@@ -472,9 +472,9 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
                 {[
                   {name:"🎬 CapCut",url:"https://www.capcut.com"},
                   {name:"🎙 ElevenLabs",url:"https://try.elevenlabs.io/c33b8205vs24"},
-                  "🎨 Canva",
-                  "📹 Pexels",
-                  "🎵 YT Audio Library",
+                  {name:"🎨 Canva",url:"https://www.canva.com"},
+                  {name:"📹 Pexels",url:"https://www.pexels.com"},
+                  {name:"🎵 YT Audio Library",url:"https://studio.youtube.com"},
                 ].map((t) => (
                   <a key={t.name} href={t.url} target="_blank" rel="noopener noreferrer" className="tool-chip" style={{textDecoration:"none",color:"inherit"}}>
                     {t}
