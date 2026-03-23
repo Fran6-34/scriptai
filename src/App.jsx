@@ -3,25 +3,77 @@ import { useState, useEffect, useRef } from "react";
 const G = `@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');`;
 
 const NICHES = [
-  { id:"psycho",  emoji:"🧠", label:"Psychologie",     desc:"Biais cognitifs & comportement", color:"#a78bfa" },
-  { id:"finance", emoji:"💸", label:"Finance perso",   desc:"Épargne, ETF & investissement",  color:"#34d399" },
-  { id:"ia",      emoji:"⚡", label:"Astuces IA",      desc:"Outils concrets & productivité", color:"#f59e0b" },
-  { id:"histoire",emoji:"📜", label:"Histoire choc",   desc:"Faits cachés & anecdotes rares", color:"#f97316" },
-  { id:"sante",   emoji:"🌿", label:"Santé & Science", desc:"Habitudes & découvertes",        color:"#2dd4bf" },
-  { id:"humour",  emoji:"😂", label:"Humour absurde",  desc:"Sketchs & situations décalées",  color:"#e879f9" },
+  {
+    id: "psycho",
+    emoji: "🧠",
+    label: "Psychologie",
+    desc: "Biais cognitifs & comportement",
+    color: "#a78bfa",
+  },
+  {
+    id: "finance",
+    emoji: "💸",
+    label: "Finance perso",
+    desc: "Épargne, ETF & investissement",
+    color: "#34d399",
+  },
+  {
+    id: "ia",
+    emoji: "⚡",
+    label: "Astuces IA",
+    desc: "Outils concrets & productivité",
+    color: "#f59e0b",
+  },
+  {
+    id: "histoire",
+    emoji: "📜",
+    label: "Histoire choc",
+    desc: "Faits cachés & anecdotes rares",
+    color: "#f97316",
+  },
+  {
+    id: "sante",
+    emoji: "🌿",
+    label: "Santé & Science",
+    desc: "Habitudes & découvertes",
+    color: "#2dd4bf",
+  },
+  {
+    id: "humour",
+    emoji: "😂",
+    label: "Humour absurde",
+    desc: "Sketchs & situations décalées",
+    color: "#e879f9",
+  },
 ];
 
 const DURATIONS = [
-  { id:"30", top:"30s", sub:"Viral éclair" },
-  { id:"60", top:"60s", sub:"Short parfait" },
-  { id:"90", top:"90s", sub:"Reels long"   },
+  { id: "30", top: "30s", sub: "Viral éclair" },
+  { id: "60", top: "60s", sub: "Short parfait" },
+  { id: "90", top: "90s", sub: "Reels long" },
 ];
 
 const TONES = [
-  { id:"choc",      label:"⚡ Choc",      grad:"linear-gradient(135deg,#ff416c,#ff4b2b)" },
-  { id:"educatif",  label:"📚 Éducatif",  grad:"linear-gradient(135deg,#11998e,#38ef7d)" },
-  { id:"inspirant", label:"✨ Inspirant",  grad:"linear-gradient(135deg,#f7971e,#ffd200)" },
-  { id:"drole",     label:"😄 Drôle",     grad:"linear-gradient(135deg,#a18cd1,#fbc2eb)" },
+  {
+    id: "choc",
+    label: "⚡ Choc",
+    grad: "linear-gradient(135deg,#ff416c,#ff4b2b)",
+  },
+  {
+    id: "educatif",
+    label: "📚 Éducatif",
+    grad: "linear-gradient(135deg,#11998e,#38ef7d)",
+  },
+  {
+    id: "inspirant",
+    label: "✨ Inspirant",
+    grad: "linear-gradient(135deg,#f7971e,#ffd200)",
+  },
+  {
+    id: "drole",
+    label: "😄 Drôle",
+    grad: "linear-gradient(135deg,#a18cd1,#fbc2eb)",
+  },
 ];
 
 const css = `
@@ -122,46 +174,62 @@ body{background:#06060f}
 `;
 
 export default function ScriptAI() {
-  const [niche,   setNiche]   = useState(null);
-  const [dur,     setDur]     = useState("60");
-  const [tone,    setTone]    = useState("choc");
-  const [topic,   setTopic]   = useState("");
+  const [niche, setNiche] = useState(null);
+  const [dur, setDur] = useState("60");
+  const [tone, setTone] = useState("choc");
+  const [topic, setTopic] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result,  setResult]  = useState(null);
-  const [dots,    setDots]    = useState("");
-  const [copied,  setCopied]  = useState(null);
-  const [count,   setCount]   = useState(2847);
+  const [result, setResult] = useState(null);
+  const [dots, setDots] = useState("");
+  const [copied, setCopied] = useState(null);
+  const [count, setCount] = useState(2847);
 
   useEffect(() => {
     if (!loading) return;
-    const iv = setInterval(() => setDots(d => d.length >= 3 ? "" : d + "."), 380);
+    const iv = setInterval(
+      () => setDots((d) => (d.length >= 3 ? "" : d + ".")),
+      380,
+    );
     return () => clearInterval(iv);
   }, [loading]);
 
   const generate = async () => {
     if (!niche || !topic.trim()) return;
-    setLoading(true); setResult(null);
-    const n = NICHES.find(x => x.id === niche);
-    const t = TONES.find(x => x.id === tone);
-    const prompt = `Tu es un expert en contenu viral YouTube Shorts / TikTok / Reels.
+    setLoading(true);
+    setResult(null);
+    const n = NICHES.find((x) => x.id === niche);
+    const t = TONES.find((x) => x.id === tone);
+    const prompt = `Tu es un expert en contenu viral pour ${dur === "30" ? "TikTok (30 secondes)" : dur === "60" ? "YouTube Shorts et TikTok (60 secondes)" : "Instagram Reels (90 secondes)"}.
 Génère un script de ${dur} secondes pour : ${n.label} — Sujet : ${topic} — Ton : ${t.label}
-Règles : phrases courtes (max 12 mots), langage parlé, zéro "Bonjour tout le monde", hook = surprise immédiate.
+
+Règles absolues :
+- Phrases très courtes, 8 mots maximum, style parlé
+- Zéro "Bonjour", zéro intro formelle
+- Hook = les 3 premières secondes DOIVENT choquer ou intriguer
+- Utilise des chiffres précis quand possible (ex: "73% des gens...")
+- CTA naturel, jamais robotique, jamais "abonnez-vous"
+- Adapte le rythme à la plateforme : TikTok = ultra rapide, Reels = légèrement plus posé
+
 Réponds UNIQUEMENT en JSON valide sans backticks :
-{"hook":"...","corps":["...","...","..."],"cta":"...","titre_suggere":"...","conseil":"..."}`;
+{"hook":"...","corps":["...","...","...","...","..."],"cta":"...","titre_suggere":"...","conseil":"..."}`;
 
     try {
-      const res  = await fetch("/api/generate", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, messages:[{role:"user",content:prompt}] }),
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{ role: "user", content: prompt }],
+        }),
       });
-      const data  = await res.json();
-      const raw   = (data.content||[]).map(c=>c.text||"").join("");
-      const clean = raw.replace(/```json|```/g,"").trim();
+      const data = await res.json();
+      const raw = (data.content || []).map((c) => c.text || "").join("");
+      const clean = raw.replace(/```json|```/g, "").trim();
       setResult(JSON.parse(clean));
-      setCount(c => c + 1);
+      setCount((c) => c + 1);
     } catch {
-      setResult({ error:true });
+      setResult({ error: true });
     }
     setLoading(false);
   };
@@ -172,42 +240,70 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
     setTimeout(() => setCopied(null), 2000);
   };
 
-  const fullScript = result && !result.error
-    ? `🎬 ${result.titre_suggere}\n\n⚡ HOOK\n${result.hook}\n\n📝 SCRIPT\n${(result.corps||[]).join("\n")}\n\n🎯 CTA\n${result.cta}\n\n💡 CONSEIL\n${result.conseil}`
-    : "";
+  const fullScript =
+    result && !result.error
+      ? `🎬 ${result.titre_suggere}\n\n⚡ HOOK\n${result.hook}\n\n📝 SCRIPT\n${(result.corps || []).join("\n")}\n\n🎯 CTA\n${result.cta}\n\n💡 CONSEIL\n${result.conseil}`
+      : "";
 
   return (
     <>
       <style>{css}</style>
       <div className="app">
-        <div className="bg"/>
-        <div className="orb orb1"/><div className="orb orb2"/><div className="orb orb3"/>
+        <div className="bg" />
+        <div className="orb orb1" />
+        <div className="orb orb2" />
+        <div className="orb orb3" />
 
         <div className="inner">
           {/* HERO */}
           <div className="hero">
-            <div className="pill"><span className="pill-dot"/>Générateur IA gratuit</div>
-            <h1 className="hero-title">Ton script<br/><span className="grad">viral en 10s</span></h1>
-            <p className="hero-sub">Shorts · Reels · TikTok — en français, propulsé par IA.<br/>Hook + Script + CTA. Prêt à filmer.</p>
+            <div className="pill">
+              <span className="pill-dot" />
+              Générateur IA gratuit
+            </div>
+            <h1 className="hero-title">
+              Ton script
+              <br />
+              <span className="grad">viral en 10s</span>
+            </h1>
+            <p className="hero-sub">
+              TikTok · Instagram Reels · YouTube Shorts — scripts viraux en
+              français.
+              <br />
+              Hook + Script + CTA. Prêt à filmer.
+            </p>
             <div className="stats">
-              <div><div className="stat-num">{count.toLocaleString("fr")}</div><div className="stat-lbl">Scripts générés</div></div>
-              <div><div className="stat-num">6</div><div className="stat-lbl">Niches</div></div>
-              <div><div className="stat-num">100%</div><div className="stat-lbl">Gratuit</div></div>
+              <div>
+                <div className="stat-num">{count.toLocaleString("fr")}</div>
+                <div className="stat-lbl">Scripts générés</div>
+              </div>
+              <div>
+                <div className="stat-num">6</div>
+                <div className="stat-lbl">Niches</div>
+              </div>
+              <div>
+                <div className="stat-num">100%</div>
+                <div className="stat-lbl">Gratuit</div>
+              </div>
             </div>
           </div>
 
-          <div className="div-line"/>
+          <div className="div-line" />
 
           {/* NICHE */}
           <div className="sec-label">① Choisis ta niche</div>
           <div className="niche-grid">
-            {NICHES.map(n => (
-              <div key={n.id} className={`niche-card ${niche===n.id?"sel":""}`}
-                style={{"--nc":n.color}} onClick={() => setNiche(n.id)}>
+            {NICHES.map((n) => (
+              <div
+                key={n.id}
+                className={`niche-card ${niche === n.id ? "sel" : ""}`}
+                style={{ "--nc": n.color }}
+                onClick={() => setNiche(n.id)}
+              >
                 <div className="n-top">
                   <span className="n-emoji">{n.emoji}</span>
                   <span className="niche-name">{n.label}</span>
-                  {niche===n.id && <span className="sel-ring">✓</span>}
+                  {niche === n.id && <span className="sel-ring">✓</span>}
                 </div>
                 <div className="niche-desc">{n.desc}</div>
               </div>
@@ -217,8 +313,12 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
           {/* DURATION */}
           <div className="sec-label">② Durée</div>
           <div className="dur-row">
-            {DURATIONS.map(d => (
-              <div key={d.id} className={`dur-btn ${dur===d.id?"sel":""}`} onClick={() => setDur(d.id)}>
+            {DURATIONS.map((d) => (
+              <div
+                key={d.id}
+                className={`dur-btn ${dur === d.id ? "sel" : ""}`}
+                onClick={() => setDur(d.id)}
+              >
                 <div className="dur-top">{d.top}</div>
                 <div className="dur-sub">{d.sub}</div>
               </div>
@@ -228,9 +328,15 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
           {/* TONE */}
           <div className="sec-label">③ Ton & style</div>
           <div className="tone-row">
-            {TONES.map(t => (
-              <div key={t.id} className={`tone-btn ${tone===t.id?"sel":""}`}
-                style={{"--tg":t.grad}} onClick={() => setTone(t.id)}>{t.label}</div>
+            {TONES.map((t) => (
+              <div
+                key={t.id}
+                className={`tone-btn ${tone === t.id ? "sel" : ""}`}
+                style={{ "--tg": t.grad }}
+                onClick={() => setTone(t.id)}
+              >
+                {t.label}
+              </div>
             ))}
           </div>
 
@@ -238,34 +344,50 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
           <div className="sec-label">④ Ton sujet</div>
           <div className="topic-wrap">
             <span className="topic-icon">✏️</span>
-            <textarea className="topic-input" rows={2} maxLength={200} value={topic}
-              onChange={e => setTopic(e.target.value)}
-              placeholder="Ex : Pourquoi tu procrastines vraiment ? L erreur epargne 90%"/>
+            <textarea
+              className="topic-input"
+              rows={2}
+              maxLength={200}
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              placeholder="Ex : Pourquoi tu procrastines vraiment ? L erreur epargne 90%"
+            />
             <span className="char-count">{topic.length}/200</span>
           </div>
 
           {/* BUTTON */}
-          <button className="gen-btn" onClick={generate}
-            disabled={loading || !niche || !topic.trim()}>
-            <span className="shimmer"/>
+          <button
+            className="gen-btn"
+            onClick={generate}
+            disabled={loading || !niche || !topic.trim()}
+          >
+            <span className="shimmer" />
             <span className="gen-btn-inner">
-              {loading ? `⚡ Rédaction en cours${dots}` : "⚡ Générer mon script maintenant"}
+              {loading
+                ? `⚡ Rédaction en cours${dots}`
+                : "⚡ Générer mon script maintenant"}
             </span>
           </button>
 
           {/* LOADING */}
           {loading && (
             <div className="loading-box">
-              <div className="loading-ring"><div className="loading-ring-inner"/></div>
+              <div className="loading-ring">
+                <div className="loading-ring-inner" />
+              </div>
               <div className="loading-text">Rédaction IA en cours{dots}</div>
-              <div className="loading-sub">Hook · Développement · CTA · Conseil montage</div>
+              <div className="loading-sub">
+                Hook · Développement · CTA · Conseil montage
+              </div>
             </div>
           )}
 
           {/* ERROR */}
           {result?.error && (
             <div className="err-box">
-              <div className="err-text">⚠ Erreur réseau — réessaie dans quelques secondes</div>
+              <div className="err-text">
+                ⚠ Erreur réseau — réessaie dans quelques secondes
+              </div>
             </div>
           )}
 
@@ -274,53 +396,100 @@ Réponds UNIQUEMENT en JSON valide sans backticks :
             <div className="result-wrap">
               <div className="result-header">
                 <div className="result-sup">✦ Script généré</div>
-                <div className="result-titresugg">🎬 {result.titre_suggere}</div>
-                <button className={`copy-all ${copied==="all"?"ok":""}`} onClick={() => cp(fullScript,"all")}>
-                  {copied==="all" ? "✓ Copié !" : "📋 Tout copier"}
+                <div className="result-titresugg">
+                  🎬 {result.titre_suggere}
+                </div>
+                <button
+                  className={`copy-all ${copied === "all" ? "ok" : ""}`}
+                  onClick={() => cp(fullScript, "all")}
+                >
+                  {copied === "all" ? "✓ Copié !" : "📋 Tout copier"}
                 </button>
               </div>
 
               <div className="sblock sblock-hook">
                 <div className="sb-head">
                   <span className="sb-tag">⚡ HOOK — 0 à 5s</span>
-                  <button className={`copy-mini ${copied==="hook"?"ok":""}`} onClick={() => cp(result.hook,"hook")}>
-                    {copied==="hook"?"✓ ok":"Copier"}</button>
+                  <button
+                    className={`copy-mini ${copied === "hook" ? "ok" : ""}`}
+                    onClick={() => cp(result.hook, "hook")}
+                  >
+                    {copied === "hook" ? "✓ ok" : "Copier"}
+                  </button>
                 </div>
-                <div className="sb-text" style={{fontSize:"1.05rem",fontWeight:"500",color:"#f0eeff"}}>{result.hook}</div>
+                <div
+                  className="sb-text"
+                  style={{
+                    fontSize: "1.05rem",
+                    fontWeight: "500",
+                    color: "#f0eeff",
+                  }}
+                >
+                  {result.hook}
+                </div>
               </div>
 
               <div className="sblock sblock-corps">
                 <div className="sb-head">
                   <span className="sb-tag">📝 DÉVELOPPEMENT</span>
-                  <button className={`copy-mini ${copied==="corps"?"ok":""}`} onClick={() => cp((result.corps||[]).join("\n"),"corps")}>
-                    {copied==="corps"?"✓ ok":"Copier"}</button>
+                  <button
+                    className={`copy-mini ${copied === "corps" ? "ok" : ""}`}
+                    onClick={() => cp((result.corps || []).join("\n"), "corps")}
+                  >
+                    {copied === "corps" ? "✓ ok" : "Copier"}
+                  </button>
                 </div>
                 <div className="sb-text">
-                  {(result.corps||[]).map((l,i) => <span key={i} className="corps-line">{l}</span>)}
+                  {(result.corps || []).map((l, i) => (
+                    <span key={i} className="corps-line">
+                      {l}
+                    </span>
+                  ))}
                 </div>
               </div>
 
               <div className="sblock sblock-cta">
                 <div className="sb-head">
                   <span className="sb-tag">🎯 CALL TO ACTION</span>
-                  <button className={`copy-mini ${copied==="cta"?"ok":""}`} onClick={() => cp(result.cta,"cta")}>
-                    {copied==="cta"?"✓ ok":"Copier"}</button>
+                  <button
+                    className={`copy-mini ${copied === "cta" ? "ok" : ""}`}
+                    onClick={() => cp(result.cta, "cta")}
+                  >
+                    {copied === "cta" ? "✓ ok" : "Copier"}
+                  </button>
                 </div>
                 <div className="sb-text">{result.cta}</div>
               </div>
 
               <div className="sblock sblock-conseil">
-                <div className="sb-head"><span className="sb-tag">💡 CONSEIL MONTAGE</span></div>
+                <div className="sb-head">
+                  <span className="sb-tag">💡 CONSEIL MONTAGE</span>
+                </div>
                 <div className="sb-text conseil-text">{result.conseil}</div>
               </div>
 
               <div className="tools-row">
-                {["🎬 CapCut","🎙 ElevenLabs","🎨 Canva","📹 Pexels","🎵 YT Audio Library"].map(t=>(
-                  <span key={t} className="tool-chip">{t}</span>
+                {[
+                  "🎬 CapCut",
+                  "🎙 ElevenLabs",
+                  "🎨 Canva",
+                  "📹 Pexels",
+                  "🎵 YT Audio Library",
+                ].map((t) => (
+                  <span key={t} className="tool-chip">
+                    {t}
+                  </span>
                 ))}
               </div>
 
-              <button className="reset-btn" onClick={() => { setResult(null); setTopic(""); setNiche(null); }}>
+              <button
+                className="reset-btn"
+                onClick={() => {
+                  setResult(null);
+                  setTopic("");
+                  setNiche(null);
+                }}
+              >
                 Nouveau script →
               </button>
             </div>
